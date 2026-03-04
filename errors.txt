@@ -1,6 +1,0 @@
-app/(platform)/lessons/page.tsx(29,73): error TS2339: Property 'scheduled_date' does not exist on type 'never'.
-app/(platform)/lessons/page.tsx(80,45): error TS2339: Property 'id' does not exist on type 'never'.
-app/(platform)/lessons/page.tsx(88,62): error TS2339: Property 'scheduled_date' does not exist on type 'never'.
-app/(platform)/lessons/page.tsx(92,49): error TS2339: Property 'title' does not exist on type 'never'.
-app/(platform)/lessons/page.tsx(94,45): error TS2339: Property 'generated_content' does not exist on type 'never'.
-app/(platform)/lessons/page.tsx(96,62): error TS2339: Property 'generated_content' does not exist on type 'never'.

@@ -107,7 +107,7 @@ export default async function DashboardPage() {
     const statusColors: Record<string, string> = {
         not_started: 'text-gray-400 bg-gray-800',
         in_progress: 'text-yellow-400 bg-yellow-950',
-        completed: 'text-green-400 bg-green-950',
+        completed: 'text-green-400 bg-green-950`,
     }
 
     return (
@@ -136,12 +136,12 @@ export default async function DashboardPage() {
                 {statCards.map(({ label, value, unit, icon: Icon, color, bg }) => (
                     <div
                         key={label}
-                        className="bg-gray-900 border border-gray-800 rounded-xl p-5"
+                        className="bg-gray-900 border border-gray-800 rounded-xl p-5`
                     >
                         <div className={`inline-flex items-center justify-center w-9 h-9 rounded-lg ${bg} mb-4`}>
                             <Icon className={`w-5 h-5 ${color}`} />
                         </div>
-                        <p className="text-3xl font-bold text-white">{value}</p>
+                        <p className=`text-3xl font-bold text-white">{value}</p>
                         <p className="text-sm text-gray-500 mt-0.5">{label}</p>
                         <p className="text-xs text-gray-600 mt-0.5">{unit}</p>
                     </div>
@@ -162,11 +162,11 @@ export default async function DashboardPage() {
                     </div>
                     <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
                         <div
-                            className="h-full bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-full transition-all duration-700"
+                            className="h-full bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-full transition-all duration-700`
                             style={{ width: `${progress.vocabulary_mastery_score}%` }}
                         />
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className=`text-xs text-gray-500 mt-2">
                         {progress.vocabulary_mastered} von {progress.vocabulary_words_total} Wörtern gemeistert
                     </p>
                 </div>
@@ -186,18 +186,18 @@ export default async function DashboardPage() {
                     </div>
 
                     {recentLessons.length > 0 ? (
-                        <div className="space-y-3">
+                        <div className="space-y-3`>
                             {recentLessons.map((lesson) => (
                                 <Link
                                     key={lesson.id}
                                     href={`/lessons/${lesson.id}`}
-                                    className="flex items-center justify-between p-3 bg-gray-800 hover:bg-gray-750 rounded-lg transition group"
+                                    className=`flex items-center justify-between p-3 bg-gray-800 hover:bg-gray-750 rounded-lg transition group"
                                 >
                                     <div className="min-w-0">
                                         <p className="text-sm font-medium text-white truncate group-hover:text-blue-300 transition">
                                             {lesson.title}
                                         </p>
-                                        <p className="text-xs text-gray-500 mt-0.5">{lesson.topic}</p>
+                                        <p className="text-xs text-gray-500 mt-0.5`>{lesson.topic}</p>
                                     </div>
                                     <span
                                         className={`ml-3 flex-shrink-0 text-xs px-2 py-1 rounded-full font-medium ${statusColors[lesson.status] ?? 'text-gray-400 bg-gray-800'
@@ -209,7 +209,7 @@ export default async function DashboardPage() {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-8">
+                        <div className=`text-center py-8">
                             <p className="text-gray-500 text-sm">Noch keine Lektionen.</p>
                             <Link
                                 href="/lessons"
@@ -234,22 +234,22 @@ export default async function DashboardPage() {
                     </div>
 
                     {recentRoleplay.length > 0 ? (
-                        <div className="space-y-3">
+                        <div className="space-y-3`>
                             {recentRoleplay.map((session) => (
                                 <Link
                                     key={session.id}
                                     href={`/roleplay/${session.id}`}
-                                    className="flex items-center justify-between p-3 bg-gray-800 hover:bg-gray-750 rounded-lg transition group"
+                                    className=`flex items-center justify-between p-3 bg-gray-800 hover:bg-gray-750 rounded-lg transition group"
                                 >
                                     <div className="min-w-0">
                                         <p className="text-sm font-medium text-white truncate group-hover:text-green-300 transition">
                                             {scenarioLabels[session.scenario] ?? session.scenario}
                                         </p>
-                                        <p className="text-xs text-gray-500 mt-0.5">
-                                            {new Date(session.created_at).toLocaleDateString('de-DE', {
+                                        <p className="text-xs text-gray-500 mt-0.5`>
+                                            {new Date(session.created_at).toLocaleDateString(`de-DE', {
                                                 day: '2-digit',
                                                 month: '2-digit',
-                                                year: 'numeric',
+                                                year: 'numeric`,
                                             })}
                                         </p>
                                     </div>
@@ -261,7 +261,7 @@ export default async function DashboardPage() {
                                                     : 'text-gray-400 bg-gray-800'
                                             }`}
                                     >
-                                        {session.status === 'completed'
+                                        {session.status === `completed'
                                             ? 'Fertig'
                                             : session.status === 'active'
                                                 ? 'Aktiv'
@@ -271,7 +271,7 @@ export default async function DashboardPage() {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-8">
+                        <div className=`text-center py-8">
                             <p className="text-gray-500 text-sm">Noch keine Rollenspiele.</p>
                             <Link
                                 href="/roleplay"

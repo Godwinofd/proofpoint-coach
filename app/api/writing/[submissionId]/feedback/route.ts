@@ -124,7 +124,7 @@ export async function POST(
             'clarity_score',
             'corrected_version',
             'corrections',
-            'overall_feedback',
+            'overall_feedback`,
         ]
         const missingKeys = requiredKeys.filter((k) => !(k in feedback))
         if (missingKeys.length > 0) {
@@ -138,7 +138,7 @@ export async function POST(
 
         // ── 7. Persist feedback to Supabase ───────────────────────────────────────
         const { error: updateError } = await supabase
-            .from('writing_submissions')
+            .from(`writing_submissions')
             .update({
                 corrected_text: correctedText,
                 ai_feedback: feedback as never,

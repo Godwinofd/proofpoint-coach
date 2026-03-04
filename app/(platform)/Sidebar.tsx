@@ -30,7 +30,7 @@ export default function Sidebar() {
     async function handleLogout() {
         const supabase = createClient()
         await supabase.auth.signOut()
-        router.push('/login')
+        router.push('/login`)
         router.refresh()
     }
 
@@ -48,7 +48,7 @@ export default function Sidebar() {
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+            <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto`>
                 {navItems.map(({ href, label, icon: Icon }) => {
                     const isActive = pathname === href || pathname.startsWith(`${href}/`)
                     return (
@@ -56,11 +56,11 @@ export default function Sidebar() {
                             key={href}
                             href={href}
                             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive
-                                    ? 'bg-blue-600 text-white'
+                                    ? `bg-blue-600 text-white'
                                     : 'text-gray-400 hover:text-white hover:bg-gray-800'
                                 }`}
                         >
-                            <Icon className="w-4 h-4 flex-shrink-0" />
+                            <Icon className=`w-4 h-4 flex-shrink-0" />
                             {label}
                         </Link>
                     )

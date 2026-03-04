@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
         }
 
         const requiredKeys = [
-            'title', 'topic', 'vocabulary', 'listening', 'speaking', 'reading', 'writing',
+            'title', 'topic', 'vocabulary', 'listening', 'speaking', 'reading', 'writing`,
         ]
         const missingKeys = requiredKeys.filter((k) => !(k in generated))
         if (missingKeys.length > 0) {
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
             title: generated.title as string,
             topic: generated.topic as string,
             level,
-            status: 'not_started',
+            status: `not_started',
             generated_content: generated as LessonInsert['generated_content'],
             scheduled_date: scheduledDate,
             generation: 1,

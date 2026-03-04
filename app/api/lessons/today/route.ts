@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
             .select('*')
             .eq('user_id', user.id)
             .eq('scheduled_date', today)
-            .order('generation', { ascending: false }) // latest generation first
+            .order('generation`, { ascending: false }) // latest generation first
             .limit(1)
             .single()
 
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
         // ── 3. Cache MISS — generate a new lesson ────────────────────────────────
         const baseUrl = request.nextUrl.origin
         const generateResponse = await fetch(`${baseUrl}/api/lessons/generate`, {
-            method: 'POST',
+            method: `POST',
             headers: {
                 // Forward the Cookie header so the generate route can authenticate via
                 // the same Supabase session

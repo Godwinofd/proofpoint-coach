@@ -27,7 +27,7 @@ The messages are typically:
 
 EVALUATION PHILOSOPHY:
 - Be constructive, precise, and encouraging — this is a learning context
-- Calibrate expectations to the learner's level if indicated
+- Calibrate expectations to the learner`s level if indicated
 - Flag grammar errors specifically with exact corrections
 - Prioritise professional German business writing norms (Sie-form, formal greetings, appropriate closings)
 - Highlight sales communication quality — not just grammar
@@ -61,10 +61,10 @@ export function buildWritingUserPrompt(params: WritingPromptParams): string {
 LEARNER LEVEL: ${level ?? 'B1'} (CEFR)
 
 WRITING PROMPT GIVEN TO LEARNER:
-"${writingPrompt}"
+`${writingPrompt}`
 
-LEARNER'S SUBMISSION:
-"${submissionText}"
+LEARNER`S SUBMISSION:
+`${submissionText}`
 
 Evaluate the submission and return feedback following EXACTLY this JSON schema. No other output.
 

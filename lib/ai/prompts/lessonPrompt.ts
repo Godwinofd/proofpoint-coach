@@ -62,7 +62,7 @@ export const LESSON_JSON_SCHEMA = {
 }
 
 /**
- * System prompt — establishes the AI's role and output constraints.
+ * System prompt — establishes the AI`s role and output constraints.
  */
 export function buildSystemPrompt(): string {
     return `You are an expert German language teacher and cybersecurity sales trainer.
@@ -103,7 +103,7 @@ export function buildUserPrompt(params: LessonPromptParams): string {
 
     const topicInstruction = focusTopic
         ? `Focus topic: **${focusTopic}**`
-        : `Choose a cybersecurity topic that has NOT been covered recently. Recent topics to avoid: ${recentTopics.length > 0 ? recentTopics.join(', ') : 'none yet'
+        : `Choose a cybersecurity topic that has NOT been covered recently. Recent topics to avoid: ${recentTopics.length > 0 ? recentTopics.join(`, ') : 'none yet'
         }`
 
     return `Generate a complete German cybersecurity sales training lesson.

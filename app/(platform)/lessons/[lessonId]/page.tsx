@@ -38,8 +38,8 @@ type LessonContent = {
 export async function generateMetadata({ params }: { params: Promise<{ lessonId: string }> }) {
     const { lessonId } = await params
     const supabase = await createClient()
-    const { data: lesson } = await supabase.from('lessons').select('title').eq('id`, lessonId).single()
-    return { title: `${lesson?.title ?? 'Lektion'} | Proofpoint Trainer` }
+    const { data: lesson } = await supabase.from('lessons').select('title').eq('id', lessonId).single()
+    return { title: `${(lesson as any)?.title ?? 'Lektion'} | Proofpoint Trainer` }
 }
 
 export default async function LessonDetailPage({ params }: { params: Promise<{ lessonId: string }> }) {
@@ -50,7 +50,7 @@ export default async function LessonDetailPage({ params }: { params: Promise<{ l
         data: { user },
     } = await supabase.auth.getUser()
 
-    if (!user) redirect(`/login')
+    if (!user) redirect('/login')
 
     const { data: lesson } = await supabase
         .from('lessons')

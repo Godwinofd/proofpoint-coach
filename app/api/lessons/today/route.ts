@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
 
 /**
  * GET /api/lessons/today
@@ -36,27 +36,29 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
 
-        // ── 2. Check cache (DB query) ────────────────────────────────────────────
+        const adminClient = createAdminClient()
         const today = new Date().toISOString().split('T')[0]
 
-        const { data: cached } = await supabase
+        const { data: cached } = await adminClient
             .from('lessons')
             .select('*')
             .eq('user_id', user.id)
             .eq('scheduled_date', today)
-            .order('generation`, { ascending: false }) // latest generation first
+            .order('generation', { ascending: false })
             .limit(1)
-            .single()
+            .maybeSingle()
 
         if (cached) {
             // Cache HIT — return existing lesson, no OpenAI call
             return NextResponse.json({ lesson: cached, cached: true }, { status: 200 })
         }
 
+        console.log('[/api/lessons/today] Cache MISS')
+
         // ── 3. Cache MISS — generate a new lesson ────────────────────────────────
         const baseUrl = request.nextUrl.origin
         const generateResponse = await fetch(`${baseUrl}/api/lessons/generate`, {
-            method: `POST',
+            method: 'POST',
             headers: {
                 // Forward the Cookie header so the generate route can authenticate via
                 // the same Supabase session

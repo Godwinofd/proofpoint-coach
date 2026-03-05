@@ -84,16 +84,16 @@ export default async function AnalyticsPage() {
                                         <span className="text-xs text-gray-500">{ev.date.split(' ')[1]}</span>
                                     </div>
                                     <div className="flex-1">
-                                        <h3 className="text-sm font-semibold text-white capitalize">{ev.scenario.replace('_', ' `)}</h3>
+                                        <h3 className="text-sm font-semibold text-white capitalize">{ev.scenario.replace('_', ' ')}</h3>
                                         {/* Progress bar */}
-                                        <div className="w-full bg-gray-800 h-1.5 rounded-full mt-2`>
+                                        <div className="w-full bg-gray-800 h-1.5 rounded-full mt-2">
                                             <div
                                                 className={`h-full rounded-full ${ev.score >= 8 ? 'bg-green-500' : ev.score >= 5 ? 'bg-yellow-500' : 'bg-red-500'}`}
                                                 style={{ width: `${(ev.score / 10) * 100}%` }}
                                             />
                                         </div>
                                     </div>
-                                    <div className=`text-lg font-bold text-white shrink-0 w-10 text-right">
+                                    <div className="text-lg font-bold text-white shrink-0 w-10 text-right">
                                         {ev.score}
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@ export default async function AnalyticsPage() {
                             KI Empfehlung
                         </h2>
                         <p className="text-indigo-100 text-sm leading-relaxed">
-                            {recentEvals.length > 0 && avgScore >= `7.0'
+                            {recentEvals.length > 0 && avgScore >= '7.0'
                                 ? "Starke Rollenspiel-Ergebnisse! Ihr Verkaufsgespräch auf Deutsch ist sehr flüssig. Vertiefen Sie nun spezifische Fachvokabeln im Bereich Cloud Security."
                                 : recentEvals.length > 0
                                     ? "Ihre Einwandbehandlung könnte noch natürlicher wirken. Formulieren Sie Antworten auf Deutsch vorher schriftlich in der Schreibübung, bevor Sie ins Rollenspiel gehen."

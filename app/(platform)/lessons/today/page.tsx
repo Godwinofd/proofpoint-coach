@@ -6,12 +6,14 @@ export default async function TodayLessonRedirect() {
     // then redirect to the actual lesson page.
     const headersList = await headers()
     const domain = headersList.get('host') || ''
-    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https`
+    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https'
     const baseUrl = `${protocol}://${domain}`
+
+    let destination = '/lessons'
 
     try {
         const res = await fetch(`${baseUrl}/api/lessons/today`, {
-            method: `GET',
+            method: 'GET',
             headers: {
                 cookie: headersList.get('cookie') ?? '',
             },
@@ -20,17 +22,18 @@ export default async function TodayLessonRedirect() {
         })
 
         if (!res.ok) {
-            throw new Error('Failed to fetch today lesson`)
+            throw new Error('Failed to fetch today lesson')
         }
 
         const data = await res.json()
         if (data?.lesson?.id) {
-            redirect(`/lessons/${data.lesson.id}`)
-        } else {
-            redirect(`/lessons')
+            destination = `/lessons/${data.lesson.id}`
         }
     } catch (error) {
         console.error('Redirect to today lesson failed:', error)
-        redirect('/lessons')
     }
+
+    // Call redirect outside the try-catch block
+    // Next.js redirect() throws a special error to halt execution and return a 307
+    redirect(destination)
 }

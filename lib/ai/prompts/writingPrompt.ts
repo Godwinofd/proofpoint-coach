@@ -2,19 +2,19 @@ import { proofpointContext } from '@/lib/ai/context/proofpoint'
 import { germanSalesContext } from '@/lib/ai/context/german-sales'
 
 export type WritingPromptParams = {
-    /** The lesson writing prompt the user was given */
-    writingPrompt: string
-    /** The user's submitted German text */
-    submissionText: string
-    /** Approximate CEFR level for calibrating expectations */
-    level?: string
+  /** The lesson writing prompt the user was given */
+  writingPrompt: string
+  /** The user's submitted German text */
+  submissionText: string
+  /** Approximate CEFR level for calibrating expectations */
+  level?: string
 }
 
 /**
  * System prompt — establishes the AI as a German cybersecurity sales writing coach.
  */
 export function buildWritingSystemPrompt(): string {
-    return `You are an expert German business writing coach specialising in B2B cybersecurity sales communication.
+  return `You are an expert German business writing coach specialising in B2B cybersecurity sales communication.
 
 Your role is to evaluate German-language business messages written by a Proofpoint Business Development Representative.
 
@@ -27,7 +27,7 @@ The messages are typically:
 
 EVALUATION PHILOSOPHY:
 - Be constructive, precise, and encouraging — this is a learning context
-- Calibrate expectations to the learner`s level if indicated
+- Calibrate expectations to the learner's level if indicated
 - Flag grammar errors specifically with exact corrections
 - Prioritise professional German business writing norms (Sie-form, formal greetings, appropriate closings)
 - Highlight sales communication quality — not just grammar
@@ -54,17 +54,17 @@ The JSON must exactly match the schema given in the user prompt.`
  * User prompt — provides the specific submission for evaluation.
  */
 export function buildWritingUserPrompt(params: WritingPromptParams): string {
-    const { writingPrompt, submissionText, level } = params
+  const { writingPrompt, submissionText, level } = params
 
-    return `Evaluate the following German business writing submission.
+  return `Evaluate the following German business writing submission.
 
 LEARNER LEVEL: ${level ?? 'B1'} (CEFR)
 
 WRITING PROMPT GIVEN TO LEARNER:
-`${writingPrompt}`
+${writingPrompt}
 
-LEARNER`S SUBMISSION:
-`${submissionText}`
+LEARNER'S SUBMISSION:
+${submissionText}
 
 Evaluate the submission and return feedback following EXACTLY this JSON schema. No other output.
 
@@ -98,11 +98,11 @@ Evaluate the submission and return feedback following EXACTLY this JSON schema. 
  * Convenience builder — returns both prompts together.
  */
 export function buildWritingPrompts(params: WritingPromptParams): {
-    systemPrompt: string
-    userPrompt: string
+  systemPrompt: string
+  userPrompt: string
 } {
-    return {
-        systemPrompt: buildWritingSystemPrompt(),
-        userPrompt: buildWritingUserPrompt(params),
-    }
+  return {
+    systemPrompt: buildWritingSystemPrompt(),
+    userPrompt: buildWritingUserPrompt(params),
+  }
 }

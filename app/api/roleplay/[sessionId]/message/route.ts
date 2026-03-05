@@ -136,7 +136,7 @@ export async function POST(
                     })
 
                     for await (const chunk of streamResponse) {
-                        const delta = chunk.choices[0]?.delta?.content ?? '`
+                        const delta = chunk.choices[0]?.delta?.content ?? ''
                         if (delta) {
                             aiFullResponse += delta
                             // SSE format: "data: <content>\n\n"
@@ -144,12 +144,12 @@ export async function POST(
                         }
 
                         // Stream finished
-                        if (chunk.choices[0]?.finish_reason === `stop') {
+                        if (chunk.choices[0]?.finish_reason === 'stop') {
                             controller.enqueue(encoder.encode(`data: [DONE]\n\n`))
                         }
                     }
                 } catch (streamErr) {
-                    console.error('[roleplay message stream error]`, streamErr)
+                    console.error('[roleplay message stream error]', streamErr)
                     controller.enqueue(
                         encoder.encode(`data: ${JSON.stringify({ error: 'Stream error' })}\n\n`)
                     )
@@ -158,7 +158,7 @@ export async function POST(
                     if (aiFullResponse.trim()) {
                         const aiMessage: MessageInsert = {
                             session_id: sessionId,
-                            role: `assistant',
+                            role: 'assistant',
                             content: aiFullResponse.trim(),
                             turn_index: aiTurnIndex,
                         }

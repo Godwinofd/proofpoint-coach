@@ -13,7 +13,7 @@ export default function VocabularyClient({ initialWords }: { initialWords: Vocab
     const [isReviewing, setIsReviewing] = useState(false)
 
     // Calculate due words
-    const today = new Date().toISOString().split('T`)[0]
+    const today = new Date().toISOString().split('T')[0]
     const dueWords = words.filter(w => w.next_review_date && w.next_review_date <= today)
     const formatWordsForFlashcard = (rows: VocabRow[]): FlashCardWord[] => {
         return rows.map(r => ({
@@ -135,12 +135,11 @@ export default function VocabularyClient({ initialWords }: { initialWords: Vocab
                                     <span className="bg-gray-800 text-gray-300 px-2 py-1 rounded">
                                         Niveau: {w.mastery_level}/5
                                     </span>
-                                    <span className={`px-2 py-1 rounded ${
-                                        w.next_review_date && w.next_review_date <= today
+                                    <span className={`px-2 py-1 rounded ${w.next_review_date && w.next_review_date <= today
                                             ? 'bg-indigo-900/50 text-indigo-300 border border-indigo-800'
                                             : 'text-gray-500'
-                                    }`}>
-                                        Nächste: {w.next_review_date ? new Date(w.next_review_date).toLocaleDateString(`de-DE') : 'Ausstehend'}
+                                        }`}>
+                                        Nächste: {w.next_review_date ? new Date(w.next_review_date).toLocaleDateString('de-DE') : 'Ausstehend'}
                                     </span>
                                 </div>
                             </div>

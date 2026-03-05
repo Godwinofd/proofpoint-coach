@@ -25,7 +25,7 @@ export default async function LessonsPage() {
 
     const todayStr = new Date().toISOString().split('T')[0]
 
-    // Check if the first lesson is today`s lesson
+    // Check if the first lesson is today's lesson
     const hasTodaysLesson = lessons && lessons.length > 0 && (lessons[0] as any).scheduled_date === todayStr
 
     return (
@@ -74,18 +74,18 @@ export default async function LessonsPage() {
                         Sie haben noch keine Lektionen absolviert. Starten Sie Ihre erste Lektion oben!
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4`>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {(lessons as any[]).map((lesson: any) => (
                             <Link
                                 key={lesson.id}
                                 href={`/lessons/${lesson.id}`}
-                                className=`bg-gray-900 border border-gray-800 hover:border-gray-700 rounded-xl p-5 flex flex-col justify-between transition group"
+                                className="bg-gray-900 border border-gray-800 hover:border-gray-700 rounded-xl p-5 flex flex-col justify-between transition group"
                             >
                                 <div>
                                     <div className="flex items-center gap-2 mb-2">
                                         <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded flex items-center gap-1">
                                             <Clock className="w-3 h-3" />
-                                            {new Date(lesson.scheduled_date).toLocaleDateString(`de-DE')}
+                                            {new Date(lesson.scheduled_date).toLocaleDateString('de-DE')}
                                         </span>
                                     </div>
                                     <h4 className="font-semibold text-white group-hover:text-blue-400 transition mb-2">

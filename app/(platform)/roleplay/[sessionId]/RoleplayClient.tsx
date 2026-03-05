@@ -41,11 +41,11 @@ export default function RoleplayClient({
 
         // Optimistic UI
         const tempId = Date.now().toString()
-        setMessages(prev => [...prev, { id: tempId, role: 'user`, content: userMsg }])
+        setMessages(prev => [...prev, { id: tempId, role: 'user', content: userMsg }])
 
         try {
             const res = await fetch(`/api/roleplay/${session.id}/message`, {
-                method: `POST',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ content: userMsg })
             })
@@ -84,7 +84,7 @@ export default function RoleplayClient({
                                 ))
                             }
                         } catch (e) {
-                            console.error('Error parsing SSE chunk`, e)
+                            console.error('Error parsing SSE chunk', e)
                         }
                     }
                 }
@@ -103,7 +103,7 @@ export default function RoleplayClient({
 
         try {
             const res = await fetch(`/api/roleplay/${session.id}/evaluate`, {
-                method: `POST',
+                method: 'POST',
             })
             const data = await res.json()
             if (data.evaluation) {
@@ -139,7 +139,7 @@ export default function RoleplayClient({
                         disabled={evaluating || loading}
                         className="px-4 py-2 bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white text-sm font-semibold rounded-lg transition shrink-0"
                     >
-                        {evaluating ? 'Auswertung läuft...' : 'Gespräch beenden & Auswerten`}
+                        {evaluating ? 'Auswertung läuft...' : 'Gespräch beenden & Auswerten'}
                     </button>
                 )}
             </div>
@@ -150,23 +150,21 @@ export default function RoleplayClient({
                     <div className="text-center text-gray-500 mt-10">
                         <MessageCircle className="w-12 h-12 mx-auto mb-3 opacity-20" />
                         <p>Beginnen Sie das Gespräch.</p>
-                        <p className="text-sm mt-1`>Stellen Sie sich vor und nennen Sie den Grund Ihres Anrufs.</p>
+                        <p className="text-sm mt-1">Stellen Sie sich vor und nennen Sie den Grund Ihres Anrufs.</p>
                     </div>
                 )}
 
                 {messages.map((msg, i) => (
                     <div key={msg.id || i} className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
-                            msg.role === `user' ? 'bg-blue-900 text-blue-400' : 'bg-gray-800 text-green-400'
-                        }`}>
-                            {msg.role === 'user` ? <User className=`w-5 h-5" /> : <Bot className="w-5 h-5` />}
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'user' ? 'bg-blue-900 text-blue-400' : 'bg-gray-800 text-green-400'
+                            }`}>
+                            {msg.role === 'user' ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
                         </div>
-                        <div className={`px-5 py-3 rounded-2xl max-w-[80%] ${
-                            msg.role === 'user' 
-                                ? 'bg-blue-600 text-white rounded-tr-none' 
-                                : 'bg-gray-800 text-gray-200 rounded-tl-none border border-gray-700'
-                        }`}>
-                            <p className=`whitespace-pre-wrap leading-relaxed">{msg.content}</p>
+                        <div className={`px-5 py-3 rounded-2xl max-w-[80%] ${msg.role === 'user'
+                            ? 'bg-blue-600 text-white rounded-tr-none'
+                            : 'bg-gray-800 text-gray-200 rounded-tl-none border border-gray-700'
+                            }`}>
+                            <p className="whitespace-pre-wrap leading-relaxed">{msg.content}</p>
                         </div>
                     </div>
                 ))}
@@ -186,23 +184,23 @@ export default function RoleplayClient({
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                             {[
-                                { k: `language_clarity', l: 'Sprachliche Klarheit' },
+                                { k: 'language_clarity', l: 'Sprachliche Klarheit' },
                                 { k: 'grammar_accuracy', l: 'Grammatik' },
                                 { k: 'sales_discovery_quality', l: 'Discovery Qualität' },
                                 { k: 'objection_handling', l: 'Einwandbehandlung' },
-                                { k: 'business_tone', l: 'Professionalität` }
+                                { k: 'business_tone', l: 'Professionalität' }
                             ].map(({ k, l }) => {
                                 const sc = evaluation[k]
                                 if (!sc) return null
                                 return (
                                     <div key={k} className="bg-gray-900 border border-gray-800 rounded-lg p-4">
                                         <div className="flex justify-between items-center mb-2">
-                                            <span className="font-semibold text-gray-300`>{l}</span>
+                                            <span className="font-semibold text-gray-300">{l}</span>
                                             <span className={`font-bold ${sc.score >= 8 ? 'text-green-400' : sc.score >= 5 ? 'text-yellow-400' : 'text-red-400'}`}>
                                                 {sc.score}/10
                                             </span>
                                         </div>
-                                        <p className=`text-xs text-gray-500 leading-relaxed">{sc.feedback}</p>
+                                        <p className="text-xs text-gray-500 leading-relaxed">{sc.feedback}</p>
                                     </div>
                                 )
                             })}
@@ -243,7 +241,7 @@ export default function RoleplayClient({
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={(e) => {
-                                if (e.key === `Enter' && !e.shiftKey) {
+                                if (e.key === 'Enter' && !e.shiftKey) {
                                     e.preventDefault();
                                     sendMessage();
                                 }

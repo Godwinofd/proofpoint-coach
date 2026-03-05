@@ -40,7 +40,7 @@ export default async function ProgressPage() {
     }
 
     const cefrLevel = (profile as any)?.cefr_level || 'B1'
-    const name = (profile as any)?.full_name?.split(' ')[0] || 'Dort`
+    const name = (profile as any)?.full_name?.split(' ')[0] || 'Dort'
     return (
         <div className="space-y-8 max-w-5xl mx-auto">
             <div className="flex items-center gap-2.5 mb-2">
@@ -67,14 +67,14 @@ export default async function ProgressPage() {
                 </div>
                 <div className="w-full md:w-64 bg-indigo-950/50 rounded-full h-3 overflow-hidden border border-indigo-800">
                     <div
-                        className="bg-gradient-to-r from-blue-400 to-indigo-400 h-full rounded-full`
+                        className="bg-gradient-to-r from-blue-400 to-indigo-400 h-full rounded-full"
                         style={{ width: `${(stats.total_xp % 1000) / 10}%` }}
                     />
                 </div>
             </div>
 
             {/* Key Metrics Grid */}
-            <div className=`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* Streak */}
                 <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
                     <div className="bg-orange-950/50 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
@@ -105,14 +105,14 @@ export default async function ProgressPage() {
                     <p className="text-sm text-gray-400">Gemeisterte Vokabeln</p>
                     <div className="w-full bg-gray-800 rounded-full h-1.5 mt-3">
                         <div
-                            className="bg-emerald-500 h-1.5 rounded-full`
+                            className="bg-emerald-500 h-1.5 rounded-full"
                             style={{ width: `${stats.vocabulary_words_total ? (stats.vocabulary_words_mastered / stats.vocabulary_words_total) * 100 : 0}%` }}
                         />
                     </div>
                 </div>
 
                 {/* Roleplay */}
-                <div className=`bg-gray-900 border border-gray-800 rounded-2xl p-6">
+                <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
                     <div className="bg-green-950/50 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
                         <MessageCircle className="w-6 h-6 text-green-500" />
                     </div>
@@ -132,9 +132,9 @@ export default async function ProgressPage() {
                     <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-800 -translate-y-1/2 rounded-full z-0" />
 
                     <div className="relative z-10 flex justify-between">
-                        {[`A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map((lvl, i) => {
+                        {['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map((lvl, i) => {
                             // Find the index of the user's level. Assuming A1=0, C2=5.
-                            const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2`]
+                            const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
                             const targetIdx = levels.indexOf(cefrLevel)
 
                             const isPast = i < targetIdx
@@ -142,15 +142,14 @@ export default async function ProgressPage() {
                             const isFuture = i > targetIdx
 
                             return (
-                                <div key={lvl} className="flex flex-col items-center gap-2`>
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${
-                                        isPast ? 'bg-indigo-600 text-white' :
-                                        isCurrent ? 'bg-indigo-500 text-white ring-4 ring-indigo-500/30' :
-                                        'bg-gray-800 text-gray-500 border-2 border-gray-700'
-                                    }`}>
-                                        {isPast ? <CheckCircle className=`w-4 h-4` /> : lvl}
+                                <div key={lvl} className="flex flex-col items-center gap-2">
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${isPast ? 'bg-indigo-600 text-white' :
+                                            isCurrent ? 'bg-indigo-500 text-white ring-4 ring-indigo-500/30' :
+                                                'bg-gray-800 text-gray-500 border-2 border-gray-700'
+                                        }`}>
+                                        {isPast ? <CheckCircle className="w-4 h-4" /> : lvl}
                                     </div>
-                                    <span className={`text-xs font-medium ${isCurrent ? `text-indigo-400' : 'text-gray-500'}`}>
+                                    <span className={`text-xs font-medium ${isCurrent ? 'text-indigo-400' : 'text-gray-500'}`}>
                                         {lvl}
                                     </span>
                                 </div>
@@ -159,7 +158,7 @@ export default async function ProgressPage() {
                     </div>
                 </div>
 
-                <p className=`text-sm text-gray-400 text-center mt-8 max-w-lg mx-auto leading-relaxed">
+                <p className="text-sm text-gray-400 text-center mt-8 max-w-lg mx-auto leading-relaxed">
                     Ihr Ziel ist das C1/C2 Niveau für verhandlungssicheres Geschäftsdeutsch im DACH-Raum.
                     Absolvieren Sie mehr Rollenspiele und vertiefen Sie Ihren Proofpoint-Wortschatz, um aufzusteigen.
                 </p>

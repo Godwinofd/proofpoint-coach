@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServiceClient } from '@/lib/supabase/server'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { openai, DEFAULT_MODEL } from '@/lib/ai/client'
 import { buildLessonPrompts } from '@/lib/ai/prompts/lessonPrompt'
 import type { Database } from '@/types/database'
@@ -27,8 +27,8 @@ type VocabInsert = Database['public']['Tables']['vocabulary']['Insert']
  */
 export async function POST(request: NextRequest) {
     try {
-        // Use service client — we need to write to multiple tables in one request
-        const supabase = await createServiceClient()
+        // Use standard client for auth and reads
+        const supabase = await createClient()
 
         // ── 1. Authenticate ──────────────────────────────────────────────────────
         const {
@@ -93,6 +93,7 @@ export async function POST(request: NextRequest) {
 
         const rawContent = completion.choices[0]?.message?.content
         if (!rawContent) {
+            console.error('[/api/lessons/generate] OpenAI returned an empty response')
             return NextResponse.json(
                 { error: 'OpenAI returned an empty response' },
                 { status: 502 }
@@ -103,7 +104,8 @@ export async function POST(request: NextRequest) {
         let generated: Record<string, unknown>
         try {
             generated = JSON.parse(rawContent) as Record<string, unknown>
-        } catch {
+        } catch (parseError) {
+            console.error('[/api/lessons/generate] OpenAI response was not valid JSON', rawContent, parseError)
             return NextResponse.json(
                 { error: 'OpenAI response was not valid JSON', raw: rawContent },
                 { status: 502 }
@@ -111,10 +113,11 @@ export async function POST(request: NextRequest) {
         }
 
         const requiredKeys = [
-            'title', 'topic', 'vocabulary', 'listening', 'speaking', 'reading', 'writing`,
+            'title', 'topic', 'vocabulary', 'listening', 'speaking', 'reading', 'writing',
         ]
         const missingKeys = requiredKeys.filter((k) => !(k in generated))
         if (missingKeys.length > 0) {
+            console.error('[/api/lessons/generate] Generated lesson missing required keys:', missingKeys)
             return NextResponse.json(
                 { error: `Generated lesson missing required keys: ${missingKeys.join(', ')}` },
                 { status: 502 }
@@ -127,19 +130,22 @@ export async function POST(request: NextRequest) {
             title: generated.title as string,
             topic: generated.topic as string,
             level,
-            status: `not_started',
+            status: 'not_started',
             generated_content: generated as LessonInsert['generated_content'],
             scheduled_date: scheduledDate,
             generation: 1,
         }
 
-        const { data: lesson, error: lessonError } = await supabase
+        const adminSupabase = createAdminClient()
+
+        const { data: lesson, error: lessonError } = await adminSupabase
             .from('lessons')
             .insert(lessonInsert as never)
             .select()
             .single()
 
         if (lessonError || !lesson) {
+            console.error('[/api/lessons/generate] Failed to save lesson to DB', lessonError)
             return NextResponse.json(
                 { error: 'Failed to save lesson', details: lessonError?.message },
                 { status: 500 }
@@ -169,7 +175,7 @@ export async function POST(request: NextRequest) {
                 next_review_date: scheduledDate,
             }))
 
-            await supabase
+            await adminSupabase
                 .from('vocabulary')
                 .upsert(vocabRows as never[], { ignoreDuplicates: true })
         }

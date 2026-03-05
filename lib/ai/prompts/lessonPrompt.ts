@@ -103,7 +103,7 @@ export function buildUserPrompt(params: LessonPromptParams): string {
 
     const topicInstruction = focusTopic
         ? `Focus topic: **${focusTopic}**`
-        : `Choose a cybersecurity topic that has NOT been covered recently. Recent topics to avoid: ${recentTopics.length > 0 ? recentTopics.join(`, ') : 'none yet'
+        : `Choose a cybersecurity topic that has NOT been covered recently. Recent topics to avoid: ${recentTopics.length > 0 ? recentTopics.join(', ') : 'none yet'
         }`
 
     return `Generate a complete German cybersecurity sales training lesson.

@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
             'objection_handling',
             'demo_follow_up',
             'needs_analysis',
-            'closing`,
+            'closing',
         ]
         if (!validScenarios.includes(scenario)) {
             return NextResponse.json(
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
             scenario,
             persona,
             language_mode,
-            status: `active',
+            status: 'active',
             ...(lesson_id ? { lesson_id } : {}),
         }
 

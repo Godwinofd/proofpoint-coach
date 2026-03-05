@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import RoleplayClient from './RoleplayClient'
 
@@ -9,6 +9,7 @@ export const metadata = {
 export default async function RoleplaySessionPage({ params }: { params: Promise<{ sessionId: string }> }) {
     const { sessionId } = await params
     const supabase = await createClient()
+    const adminSupabase = createAdminClient()
 
     const {
         data: { user },
@@ -16,7 +17,7 @@ export default async function RoleplaySessionPage({ params }: { params: Promise<
 
     if (!user) redirect('/login')
 
-    const { data: session } = await supabase
+    const { data: session } = await adminSupabase
         .from('roleplay_sessions')
         .select('*')
         .eq('id', sessionId)
@@ -25,7 +26,7 @@ export default async function RoleplaySessionPage({ params }: { params: Promise<
 
     if (!session) redirect('/roleplay')
 
-    const { data: messages } = await supabase
+    const { data: messages } = await adminSupabase
         .from('roleplay_messages')
         .select('id, role, content, turn_index, created_at')
         .eq('session_id', sessionId)

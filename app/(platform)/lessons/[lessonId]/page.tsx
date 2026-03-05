@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, BookOpen, Headphones, MessageCircle, PenTool, TextSelect } from 'lucide-react'
@@ -37,14 +37,15 @@ type LessonContent = {
 
 export async function generateMetadata({ params }: { params: Promise<{ lessonId: string }> }) {
     const { lessonId } = await params
-    const supabase = await createClient()
-    const { data: lesson } = await supabase.from('lessons').select('title').eq('id', lessonId).single()
+    const adminSupabase = createAdminClient()
+    const { data: lesson } = await adminSupabase.from('lessons').select('title').eq('id', lessonId).single()
     return { title: `${(lesson as any)?.title ?? 'Lektion'} | Proofpoint Trainer` }
 }
 
 export default async function LessonDetailPage({ params }: { params: Promise<{ lessonId: string }> }) {
     const { lessonId } = await params
     const supabase = await createClient()
+    const adminSupabase = createAdminClient()
 
     const {
         data: { user },
@@ -52,7 +53,7 @@ export default async function LessonDetailPage({ params }: { params: Promise<{ l
 
     if (!user) redirect('/login')
 
-    const { data: lesson } = await supabase
+    const { data: lesson } = await adminSupabase
         .from('lessons')
         .select('*')
         .eq('id', lessonId)

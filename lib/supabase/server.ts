@@ -10,27 +10,33 @@ import type { Database } from '@/types/database'
  */
 export async function createClient() {
     const cookieStore = await cookies()
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-    return createServerClient<Database>(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-            cookies: {
-                getAll() {
-                    return cookieStore.getAll()
-                },
-                setAll(cookiesToSet) {
-                    try {
-                        cookiesToSet.forEach(({ name, value, options }) =>
-                            cookieStore.set(name, value, options)
-                        )
-                    } catch {
-                        // setAll called from a Server Component — safe to ignore.
-                        // The middleware handles session refresh.
-                    }
-                },
+    if (!url || !key) {
+        throw new Error(
+            `Missing Supabase environment variables: ${!url ? 'NEXT_PUBLIC_SUPABASE_URL ' : ''}${!key ? 'NEXT_PUBLIC_SUPABASE_ANON_KEY' : ''
+            }. Please check your .env.local file and restart your development server.`
+        )
+    }
+
+    return createServerClient<Database>(url, key, {
+        cookies: {
+            getAll() {
+                return cookieStore.getAll()
             },
-        }
+            setAll(cookiesToSet) {
+                try {
+                    cookiesToSet.forEach(({ name, value, options }) =>
+                        cookieStore.set(name, value, options)
+                    )
+                } catch {
+                    // setAll called from a Server Component — safe to ignore.
+                    // The middleware handles session refresh.
+                }
+            },
+        },
+    }
     )
 }
 
@@ -41,24 +47,30 @@ export async function createClient() {
  */
 export async function createServiceClient() {
     const cookieStore = await cookies()
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-    return createServerClient<Database>(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        {
-            cookies: {
-                getAll() {
-                    return cookieStore.getAll()
-                },
-                setAll(cookiesToSet) {
-                    try {
-                        cookiesToSet.forEach(({ name, value, options }) =>
-                            cookieStore.set(name, value, options)
-                        )
-                    } catch { }
-                },
+    if (!url || !key) {
+        throw new Error(
+            `Missing Supabase environment variables: ${!url ? 'NEXT_PUBLIC_SUPABASE_URL ' : ''}${!key ? 'SUPABASE_SERVICE_ROLE_KEY' : ''
+            }. Please check your .env.local file and restart your development server.`
+        )
+    }
+
+    return createServerClient<Database>(url, key, {
+        cookies: {
+            getAll() {
+                return cookieStore.getAll()
             },
-        }
+            setAll(cookiesToSet) {
+                try {
+                    cookiesToSet.forEach(({ name, value, options }) =>
+                        cookieStore.set(name, value, options)
+                    )
+                } catch { }
+            },
+        },
+    }
     )
 }
 
@@ -68,15 +80,22 @@ export async function createServiceClient() {
  * Use for background worker tasks or system-level DB writes.
  */
 export function createAdminClient() {
-    return createSupabaseClient<Database>(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        {
-            auth: {
-                persistSession: false,
-                autoRefreshToken: false,
-                detectSessionInUrl: false
-            }
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+    if (!url || !key) {
+        throw new Error(
+            `Missing Supabase environment variables: ${!url ? 'NEXT_PUBLIC_SUPABASE_URL ' : ''}${!key ? 'SUPABASE_SERVICE_ROLE_KEY' : ''
+            }. Please check your .env.local file and restart your development server.`
+        )
+    }
+
+    return createSupabaseClient<Database>(url, key, {
+        auth: {
+            persistSession: false,
+            autoRefreshToken: false,
+            detectSessionInUrl: false
         }
+    }
     )
 }

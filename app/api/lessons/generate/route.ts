@@ -93,7 +93,6 @@ export async function POST(request: NextRequest) {
 
         const rawContent = completion.choices[0]?.message?.content
         if (!rawContent) {
-            console.error('[/api/lessons/generate] OpenAI returned an empty response')
             return NextResponse.json(
                 { error: 'OpenAI returned an empty response' },
                 { status: 502 }
@@ -105,7 +104,6 @@ export async function POST(request: NextRequest) {
         try {
             generated = JSON.parse(rawContent) as Record<string, unknown>
         } catch (parseError) {
-            console.error('[/api/lessons/generate] OpenAI response was not valid JSON', rawContent, parseError)
             return NextResponse.json(
                 { error: 'OpenAI response was not valid JSON', raw: rawContent },
                 { status: 502 }
@@ -117,7 +115,6 @@ export async function POST(request: NextRequest) {
         ]
         const missingKeys = requiredKeys.filter((k) => !(k in generated))
         if (missingKeys.length > 0) {
-            console.error('[/api/lessons/generate] Generated lesson missing required keys:', missingKeys)
             return NextResponse.json(
                 { error: `Generated lesson missing required keys: ${missingKeys.join(', ')}` },
                 { status: 502 }
@@ -145,7 +142,6 @@ export async function POST(request: NextRequest) {
             .single()
 
         if (lessonError || !lesson) {
-            console.error('[/api/lessons/generate] Failed to save lesson to DB', lessonError)
             return NextResponse.json(
                 { error: 'Failed to save lesson', details: lessonError?.message },
                 { status: 500 }
